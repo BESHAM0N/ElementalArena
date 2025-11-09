@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
 
 namespace SpaceGame
 {
@@ -8,6 +9,7 @@ namespace SpaceGame
     public sealed class CardDragHandler : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler,
         IBeginDragHandler
     {
+        [Inject] private readonly ISoundService _sound;
         private RectTransform _dragLayer;
         private Transform _originalParent;
 
@@ -29,6 +31,7 @@ namespace SpaceGame
 
         public void OnBeginDrag(PointerEventData eventData)
         { 
+            _sound.Play(SoundType.UpAndDownCard);
             if (transform.parent.TryGetComponent(out BoardSlotView slot))
                 slot.Controller.TryRemoveFromUI(slot.SlotIndex);
             

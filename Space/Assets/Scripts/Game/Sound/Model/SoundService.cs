@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace SpaceGame
 {
@@ -8,10 +10,30 @@ namespace SpaceGame
         private const string PREF_KEY = "sound_enabled";
         public bool IsSoundEnabled { get; private set; } = true;
 
-        public SoundService()
+        private readonly SoundPlayer _player;
+        private readonly HashSet<SoundType> _bgmTypes;
+        
+        private const float EFFECTS_VOLUME = 0.3f;
+
+        [Inject]
+        public SoundService(SoundPlayer player)
         {
+            _player = player;
+            
+            _bgmTypes = new HashSet<SoundType>
+            {
+                SoundType.MainMenuBackgroundMusic,
+                SoundType.LevelOneBackgroundMusic,
+                SoundType.LevelTwoBackgroundMusic,
+                SoundType.LevelThreeBackgroundMusic,
+                SoundType.LevelFourBackgroundMusic,
+                SoundType.LevelFiveBackgroundMusic,
+                SoundType.LevelSixBackgroundMusic,
+            };
+
             IsSoundEnabled = PlayerPrefs.GetInt(PREF_KEY, 1) == 1;
             Apply(IsSoundEnabled);
+           
             SceneManager.activeSceneChanged += (_, __) => Apply(IsSoundEnabled);
         }
 
@@ -19,15 +41,40 @@ namespace SpaceGame
 
         public void SetEnabled(bool enabled)
         {
+            if (IsSoundEnabled == enabled) return;
             IsSoundEnabled = enabled;
             PlayerPrefs.SetInt(PREF_KEY, enabled ? 1 : 0);
             PlayerPrefs.Save();
             Apply(enabled);
         }
 
-        private static void Apply(bool enabled)
+        private void Apply(bool enabled)
         {
-            AudioListener.volume = enabled ? 0.5f : 0f;
+            _player.SetMasterMute(!enabled);
+        }
+
+        public void Play(SoundType type, float volume = 0.2f, float pitch = 1f)
+        {
+            if (!IsSoundEnabled) return;
+            if (_bgmTypes.Contains(type))
+            {
+                _player.PlayMusic(type);
+            }
+            else
+            {
+                _player.PlaySfx(type, EFFECTS_VOLUME, pitch);
+            }
+        }
+
+        public void PlayLoop(SoundType type)
+        {
+            if (!IsSoundEnabled) return;
+            _player.PlayMusic(type);
+        }
+
+        public void StopLoop()
+        {
+            _player.StopMusic();
         }
     }
 }

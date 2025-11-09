@@ -17,9 +17,7 @@ namespace SpaceGame
 
         private readonly List<string> _badWords = new()
         {
-            "fuck", "shit", "bitch", "asshole", "bastard", "dick", "cunt", "fag",
-            "nigger", "slut", "whore", "jerk", "retard", "loser", "stupid", "idiot", "dumb", "moron", "ugly", "trash",
-            "garbage",
+            "fuck", "shit", "bitch", "asshole", "dick", "cunt", "fag", "slut", "whore", "jerk", "retard", "moron", 
             "f*ck", "f@ck", "sh1t", "b!tch", "p1d0r", "xuy", "blya", "blyat", "suka", "pidr", "ebat"
         };
 

@@ -2,8 +2,21 @@
 {
     public enum SoundType
     {
-        BackgroundMusic,
+        MainMenuBackgroundMusic,
+        LevelOneBackgroundMusic,
+        LevelTwoBackgroundMusic,
+        LevelThreeBackgroundMusic,
+        LevelFourBackgroundMusic,
+        LevelFiveBackgroundMusic,
+        LevelSixBackgroundMusic,
         ButtonClick,
-        Defeat
+        CompleteLevel,
+        UpAndDownCard,
+        AddScore,
+        FinishGame,
+        None,
+        Absorption,
+        Destroys,
+        Bonus
     }
 }

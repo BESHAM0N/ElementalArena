@@ -1,20 +1,20 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace SpaceGame
 {
     [RequireComponent(typeof(Button))]
     public sealed class StartGameButtonView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
+        [Inject] private ISoundService _sound;
+        [Inject] private IScore  _score;
         [SerializeField] private Button _button;
         [SerializeField] private float _hoverScale  = 1.1f;
         [SerializeField] private float _hoverDuration  = 0.2f;
-
-        [SerializeField] private TextMeshProUGUI _startText;
         
         private Vector3 _originalScale;
         private Tween _scaleTween;
@@ -32,12 +32,7 @@ namespace SpaceGame
             _originalScale = _button.transform.localScale;
             _button.onClick.AddListener(OnClick);
         }
-
-        public void SetStartText(string text)
-        {
-            _startText.text = $"";
-        }
-
+        
         private void OnDestroy()
         {
             _button.onClick.RemoveListener(OnClick);
@@ -46,7 +41,9 @@ namespace SpaceGame
 
         private void OnClick()
         {
-            SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+            _sound.Play(SoundType.ButtonClick);
+            _score.Reset();
+            SceneManager.LoadScene("LevelScene", LoadSceneMode.Single);
         }
         
         public void OnPointerEnter(PointerEventData eventData)

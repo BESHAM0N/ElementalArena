@@ -22,10 +22,8 @@ namespace SpaceGame
         
         public void ClearHand()
         {
-            // 1) Жёстко сносим всё, что лежит под корнем руки (на 100% надёжно)
             if (_handRoot != null)
             {
-                // только прямых детей-CardView (чтобы случайно не снести те, что утащили на борд)
                 for (int i = _handRoot.childCount - 1; i >= 0; i--)
                 {
                     var child = _handRoot.GetChild(i);
@@ -33,8 +31,7 @@ namespace SpaceGame
                         Object.Destroy(child.gameObject);
                 }
             }
-
-            // 2) Чистим то, что трекали списком (на случай, если что-то осталось)
+          
             for (int i = 0; i < _views.Count; i++)
                 if (_views[i]) Object.Destroy(_views[i].gameObject);
 

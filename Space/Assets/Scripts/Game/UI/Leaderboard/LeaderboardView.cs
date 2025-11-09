@@ -9,7 +9,7 @@ namespace SpaceGame
     public sealed class LeaderboardView : MonoBehaviour
     {
         [SerializeField] private GameObject _leaderboardContent;
-        //[SerializeField] private StartGameButtonView _startGameButtonView;
+        [SerializeField] private StartGameButtonView _startGameButtonView;
         [SerializeField] private TMP_InputField _leaderboardNameInputField;
         [SerializeField] private TMP_Text _currentScoreText;
         [SerializeField] private Button _enterNameButton;
@@ -17,7 +17,8 @@ namespace SpaceGame
         [SerializeField] private GameObject _warningText;
 
         [Inject] private ILeaderboard _leaderboard;
-
+        [Inject] private ISoundService _sound;
+        
         private void Start()
         {
             _leaderboard.GetLeaderboard();
@@ -26,19 +27,20 @@ namespace SpaceGame
             {
                 _leaderboardNameInputField.gameObject.SetActive(false);
                 _enterNameButton.gameObject.SetActive(false);
-                //_startGameButtonView.gameObject.SetActive(true);
-                //_startGameButtonView.SetStartText(_leaderboard.GetSavedPlayerName());
+                _startGameButtonView.gameObject.SetActive(true);
             }
         }
 
         private void OnEnable()
         {
+            _sound.PlayLoop(SoundType.MainMenuBackgroundMusic);
             _leaderboard.OnLoadLeaderboard += SetLeaderboard;
             _enterNameButton.onClick.AddListener(SetUsername);
         }
 
         private void OnDisable()
         {
+            _sound.StopLoop();
             _leaderboard.OnLoadLeaderboard -= SetLeaderboard;
             _enterNameButton.onClick.RemoveListener(SetUsername);
         }
@@ -48,8 +50,25 @@ namespace SpaceGame
             foreach (Transform child in _leaderboardContent.transform)
                 Destroy(child.gameObject);
             
+            var playerName = _leaderboard.GetSavedPlayerName();
+
+            if (playerName != null)
+            {
+                var myPoints = 0;
+                _leaderboard.GetLeaders().TryGetValue(playerName, out myPoints);
+                _currentScoreText.text = $"My points: {myPoints}";
+                Debug.Log($"Name: {playerName}");
+            }
+            else
+            {
+                Debug.LogWarning("No player named");
+                _currentScoreText.text = $"My points: 0";
+            }
+            
+            
             var ordered = _leaderboard.GetLeaders()
                 .OrderByDescending(kv => kv.Value)
+                .Take(30)
                 .ToList();
             
             for (int i = 0; i < ordered.Count; i++)
@@ -67,15 +86,13 @@ namespace SpaceGame
             if (_leaderboard.TryCreateUser(name, 0))
             {
                 _enterNameButton.gameObject.SetActive(false);
-                //_startGameButtonView.gameObject.SetActive(true);
-                //_warningText.SetActive(false);
+                _startGameButtonView.gameObject.SetActive(true);
+                _warningText.SetActive(false);
             }
             else
             {
-                //_warningText.SetActive(true);
+                _warningText.SetActive(true);
             }
         }
-        
-        
     }
 }

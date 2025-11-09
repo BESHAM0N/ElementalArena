@@ -7,6 +7,7 @@ namespace SpaceGame
         public override void InstallBindings()
         {
             Container.Bind<ILeaderboard>().To<Leaderboard>().AsSingle().NonLazy();
+            ScoreInstaller.Install(Container);
         }
     }
 }

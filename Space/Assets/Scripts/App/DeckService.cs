@@ -22,22 +22,6 @@ namespace SpaceGame
             _remaining = new List<CardPrototype>(_source?.Cards ?? new List<CardPrototype>());
         }
 
-        public List<Card> Deal(int count)
-        {
-            var result = new List<Card>(count);
-            if (_remaining.Count == 0 || count <= 0)
-                return result;
-
-            for (int i = 0; i < count && _remaining.Count > 0; i++)
-            {
-                var proto = _remaining[0];
-                _remaining.RemoveAt(0); // удаляем из общего списка
-                result.Add(CreateFromPrototype(proto));
-            }
-
-            return result;
-        }
-
         public List<Card> DealRandom(int count)
         {
             var result = new List<Card>(count);

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace SpaceGame
 {
@@ -10,7 +9,6 @@ namespace SpaceGame
         
         [SerializeField] private List<BoardSlotView> _slotViews;
         [SerializeField] private RectTransform _boardArea;
-        [SerializeField] private Button _enterButton;
         [SerializeField] private LevelCompletePopupView _level;
         private IBoard _board { get; set; }
 
@@ -24,21 +22,6 @@ namespace SpaceGame
             {
                 _slotViews[i].BindModel(_board.GetCard(i));
             }
-        }
-
-        private void Start()
-        {
-            _enterButton.onClick.AddListener(GetCards);
-        }
-
-        private void GetCards()
-        {
-            var list = _board.GetAllCards();
-
-            // foreach (var lCard in list)
-            // {
-            //     Debug.Log($"{lCard.DisplayName} лежит в {Board.GetCardIndex(lCard)} ячейке");
-            // }
         }
 
         private void OnDestroy()
