@@ -14,6 +14,7 @@ namespace SpaceGame
         [SerializeField] private TMP_Text _totalScoreText;
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _menuButton;
+        [SerializeField] private ScoreHud _scoreHud;
 
         public event Action NextClicked;
         public event Action MenuClicked;
@@ -43,6 +44,7 @@ namespace SpaceGame
                 _levelScoreText.text = $"Your points for this scene: {score}";
 
             _root.SetActive(true);
+            _scoreHud.Reset();
         }
 
         public void Show(int levelScore, int? totalScore)
@@ -54,6 +56,7 @@ namespace SpaceGame
                 _totalScoreText.text = $"All your points: {totalScore.Value}";
 
             _root.SetActive(true);
+            _scoreHud.Reset();
         }
 
         public void Hide()

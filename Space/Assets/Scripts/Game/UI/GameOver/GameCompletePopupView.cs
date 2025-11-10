@@ -11,6 +11,7 @@ namespace SpaceGame
         [SerializeField] private TMP_Text _totalScoreText;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _menuButton;
+        [SerializeField] private ScoreHud _scoreHud;
 
         // public event Action RestartClicked;
         public event Action MenuClicked;
@@ -26,6 +27,7 @@ namespace SpaceGame
         {
             if (_totalScoreText) _totalScoreText.text = $"All your points: {totalScore}";
             if (_root) _root.SetActive(true);
+            _scoreHud.Reset();
         }
 
         public void Hide()

@@ -9,7 +9,7 @@ namespace SpaceGame
         public event Action<int, ICard> OnSlotChanged;
         public int SlotsCount => _slots.Length;
         
-        private readonly ICard[] _slots = new ICard[7];
+        private readonly ICard[] _slots = new ICard[10];
         
         public bool TryPlace(int index, ICard card)
         {

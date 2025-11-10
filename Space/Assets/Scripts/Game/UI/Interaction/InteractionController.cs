@@ -26,13 +26,14 @@ namespace SpaceGame
 
         [Inject] private ILevelFlow _levelFlow;
         [Inject] private IScoreEvents _scoreEvents;
-
+        [Inject] private GameEvents _gameEvents;
+        private int _visualTotal;
         private readonly List<CardAnimEvent> _animBuffer = new();
         private Sequence _seq;
 
         private void Awake()
         {
-            _manager = new BoardReactionsManager(new StaticInteractionMatrix(), comboBonus: 30);
+            _manager = new BoardReactionsManager(new StaticInteractionMatrix(), _gameEvents, comboBonus: 30);
         }
 
         private void Start()
@@ -40,7 +41,7 @@ namespace SpaceGame
             if (_playButton)   _playButton.onClick.AddListener(PlayPresentation);
             if (_finishButton) _finishButton.onClick.AddListener(FinishPresentation);
 
-            SetUIStateIdle(); // стартовое состояние
+            SetUIStateIdle();
         }
 
         // ===== UI states =====
@@ -91,13 +92,15 @@ namespace SpaceGame
                 return;
 
             SetUIStatePlaying();
-
+            _visualTotal = 0;  
+            _gameEvents.RaiseScoreChanged(0);
+            
             var count = _boardController.Board.SlotsCount;
             var slots = new ICard[count];
             for (int i = 0; i < count; i++)
                 slots[i] = _boardController.Board.GetCard(i);
 
-            _manager.RunDetailed(slots, _animBuffer);
+            _visualTotal = _manager.RunDetailed(slots, _animBuffer);
 
             // Если анимировать нечего — сразу показать "Закончить"
             if (_animBuffer.Count == 0)
@@ -169,23 +172,15 @@ namespace SpaceGame
         // =============== КНОПКА 2 ===============
         private void FinishPresentation()
         {
-            // Если вдруг ещё что-то играет — остановим
             if (_seq != null && _seq.IsActive())
             {
                 _seq.Kill(true);
                 _seq = null;
             }
-
-            var count = _boardController.Board.SlotsCount;
-            var slots = new ICard[count];
-            for (int i = 0; i < count; i++)
-                slots[i] = _boardController.Board.GetCard(i);
-
-            var levelScore = _manager.RunDetailed(slots, _animBuffer);
-
-            _scoreEvents.RaiseLevelFinished(levelScore);
-            _levelFlow.CompleteLevel(levelScore);
-
+            
+            _scoreEvents.RaiseLevelFinished(_visualTotal);
+            _levelFlow.CompleteLevel(_visualTotal);
+            
             SetUIStateIdle();
         }
      
