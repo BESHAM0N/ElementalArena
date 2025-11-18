@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using SpaceGame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Game.UI.Tutor
 {
@@ -14,13 +16,18 @@ namespace Game.UI.Tutor
         [SerializeField] private List<GameObject> _tutors;
         [SerializeField] private GameObject _tutorEndPanel;
         
+        [Inject] private SoundPlayer _soundPlayer;
+        
         private int _currentIndex;
 
         private void OnEnable()
         {
             _nextButton.onClick.AddListener(OnNextTutor);
+            _nextButton.onClick.AddListener(OnButtonClick);
             _backButton.onClick.AddListener(OnBackTutor);
+            _backButton.onClick.AddListener(OnButtonClick);
             _startGameButton.onClick.AddListener(OnStartGame);
+            _startGameButton.onClick.AddListener(OnButtonClick);
             ShowTutor(_currentIndex);
         }
 
@@ -29,6 +36,11 @@ namespace Game.UI.Tutor
             _nextButton.onClick.RemoveAllListeners();
             _backButton.onClick.RemoveAllListeners();
             _startGameButton.onClick.RemoveAllListeners();
+        }
+
+        private void Awake()
+        {
+            _soundPlayer.PlayMusic(SoundType.LevelThreeBackgroundMusic);
         }
         
         private void ShowTutor(int index)
@@ -41,15 +53,16 @@ namespace Game.UI.Tutor
             if (index >= 0 && index < _tutors.Count)
             {
                 _tutors[index].SetActive(true);
+                _backButton.gameObject.SetActive(index > 0);
+                _nextButton.gameObject.SetActive(true);
+                _startGameButton.gameObject.SetActive(false);
             }
             else
             {
                 _tutorEndPanel.SetActive(true);
+                _nextButton.gameObject.SetActive(false);
+                _startGameButton.gameObject.SetActive(true);
             }
-        
-            _backButton.gameObject.SetActive(index > 0);
-            _nextButton.gameObject.SetActive(index < _tutors.Count - 1);
-            _startGameButton.gameObject.SetActive(index == _tutors.Count - 1);
         }
 
         private void OnNextTutor()
@@ -58,6 +71,12 @@ namespace Game.UI.Tutor
             {
                 _currentIndex++;
                 ShowTutor(_currentIndex);
+            }
+            else if(_currentIndex == _tutors.Count)
+            {
+                _tutorEndPanel.SetActive(true);
+                _nextButton.gameObject.SetActive(false);
+                _startGameButton.gameObject.SetActive(true);
             }
         }
 
@@ -72,7 +91,12 @@ namespace Game.UI.Tutor
 
         private void OnStartGame()
         {
-            SceneManager.LoadScene("LevelGame");
+            SceneManager.LoadScene("LevelScene");
+        }
+
+        private void OnButtonClick()
+        {
+            _soundPlayer.PlaySfx(SoundType.ButtonClick);
         }
     }
 }
