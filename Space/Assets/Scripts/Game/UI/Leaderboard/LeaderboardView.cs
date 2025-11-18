@@ -9,12 +9,12 @@ namespace SpaceGame
     public sealed class LeaderboardView : MonoBehaviour
     {
         [SerializeField] private GameObject _leaderboardContent;
-        [SerializeField] private StartGameButtonView _startGameButtonView;
         [SerializeField] private TMP_InputField _leaderboardNameInputField;
         [SerializeField] private TMP_Text _currentScoreText;
-        [SerializeField] private Button _enterNameButton;
         [SerializeField] private LeaderRow _rowPrefab;
         [SerializeField] private GameObject _warningText;
+        [SerializeField] private Button _enterNameButton;
+        [SerializeField] private StartGameButtonView _startGameButtonView;
 
         [Inject] private ILeaderboard _leaderboard;
         [Inject] private ISoundService _sound;
