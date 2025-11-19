@@ -14,7 +14,7 @@ namespace SpaceGame
         [SerializeField] private LeaderRow _rowPrefab;
         [SerializeField] private GameObject _warningText;
         [SerializeField] private Button _enterNameButton;
-        [SerializeField] private StartGameButtonView _startGameButtonView;
+        [SerializeField] private MainMenuView _mainMenuView;
 
         [Inject] private ILeaderboard _leaderboard;
         [Inject] private ISoundService _sound;
@@ -26,8 +26,7 @@ namespace SpaceGame
             if (_leaderboard.HasUsername())
             {
                 _leaderboardNameInputField.gameObject.SetActive(false);
-                _enterNameButton.gameObject.SetActive(false);
-                _startGameButtonView.gameObject.SetActive(true);
+                _enterNameButton.gameObject.SetActive(true);
             }
         }
 
@@ -100,8 +99,7 @@ namespace SpaceGame
 
             if (_leaderboard.TryCreateUser(name, 0))
             {
-                _enterNameButton.gameObject.SetActive(false);
-                _startGameButtonView.gameObject.SetActive(true);
+                _enterNameButton.gameObject.SetActive(true);
                 _warningText.SetActive(false);
             }
             else
