@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SpaceGame
@@ -10,9 +10,26 @@ namespace SpaceGame
         [SerializeField] private Button _startTutorialButton;
         [SerializeField] private Button _exitGameButton;
 
-        private void Start()
+        private void OnEnable()
         {
-            _startGameButtonView.gameObject.SetActive(true);
+            _startTutorialButton.onClick.AddListener(OnStartTutorButtonClicked);
+            _exitGameButton.onClick.AddListener(OnExitGameButtonClicked);
+        }
+
+        private void OnDisable()
+        {
+            _startTutorialButton.onClick.RemoveListener(OnStartTutorButtonClicked);
+            _exitGameButton.onClick.RemoveListener(OnExitGameButtonClicked);
+        }
+        
+        private void OnStartTutorButtonClicked()
+        {
+            SceneManager.LoadScene("TutorScene");
+        }
+
+        private void OnExitGameButtonClicked()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
