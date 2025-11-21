@@ -14,6 +14,7 @@ namespace SpaceGame
         [SerializeField] private LeaderRow _rowPrefab;
         [SerializeField] private GameObject _warningText;
         [SerializeField] private Button _enterNameButton;
+        [SerializeField] private Button _startButton;
         [SerializeField] private MainMenuView _mainMenuView;
 
         [Inject] private ILeaderboard _leaderboard;
@@ -26,7 +27,8 @@ namespace SpaceGame
             if (_leaderboard.HasUsername())
             {
                 _leaderboardNameInputField.gameObject.SetActive(false);
-                _enterNameButton.gameObject.SetActive(true);
+                _enterNameButton.gameObject.SetActive(false);
+                _startButton.gameObject.SetActive(true);
             }
         }
 
@@ -35,6 +37,7 @@ namespace SpaceGame
             _sound.PlayLoop(SoundType.MainMenuBackgroundMusic);
             _leaderboard.OnLoadLeaderboard += SetLeaderboard;
             _enterNameButton.onClick.AddListener(SetUsername);
+            _startButton.onClick.AddListener(StartGame);
             _leaderboardNameInputField.onValueChanged.AddListener(FilterInput);
         }
 
@@ -42,6 +45,7 @@ namespace SpaceGame
         {
             _sound.StopLoop();
             _leaderboard.OnLoadLeaderboard -= SetLeaderboard;
+            _startButton.onClick.RemoveListener(StartGame);
             _enterNameButton.onClick.RemoveListener(SetUsername);
             _leaderboardNameInputField.onValueChanged.RemoveListener(FilterInput);
         }
@@ -99,13 +103,19 @@ namespace SpaceGame
 
             if (_leaderboard.TryCreateUser(name, 0))
             {
-                _enterNameButton.gameObject.SetActive(true);
+                _enterNameButton.gameObject.SetActive(false);
+                _startButton.gameObject.SetActive(true);
                 _warningText.SetActive(false);
             }
             else
             {
                 _warningText.SetActive(true);
             }
+        }
+
+        private void StartGame()
+        {
+            _mainMenuView.gameObject.SetActive(true);
         }
     }
 }

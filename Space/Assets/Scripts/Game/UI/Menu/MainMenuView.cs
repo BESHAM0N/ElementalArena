@@ -6,7 +6,6 @@ namespace SpaceGame
 {
     public sealed class MainMenuView : MonoBehaviour
     {
-        [SerializeField] private StartGameButtonView _startGameButtonView;
         [SerializeField] private Button _startTutorialButton;
         [SerializeField] private Button _exitGameButton;
 

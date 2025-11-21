@@ -14,7 +14,7 @@ PlayerSettings:
   accelerometerFrequency: 60
   companyName: Clowns
   productName: ElementalArena
-  defaultCursor: {fileID: 2800000, guid: 4f0376a4c1ba16545841f8e68111fb3b, type: 3}
+  defaultCursor: {fileID: 2800000, guid: 992d363ff70be5a48aa69d9916c07c2e, type: 3}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
   m_ShowUnitySplashScreen: 1
@@ -286,7 +286,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 4b679b812b190964ba67629334a21f86, type: 3}
+      m_Icon: {fileID: 2800000, guid: 0c641606f3f5cf943a260f174a2fe3cd, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
