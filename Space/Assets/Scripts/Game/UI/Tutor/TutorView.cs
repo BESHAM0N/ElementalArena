@@ -12,6 +12,7 @@ namespace Game.UI.Tutor
         [SerializeField] private Button _nextButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _startGameButton;
+        [SerializeField] private Button _exitButton;
         
         [SerializeField] private List<GameObject> _tutors;
         [SerializeField] private GameObject _tutorEndPanel;
@@ -23,7 +24,9 @@ namespace Game.UI.Tutor
         private void OnEnable()
         {
             _nextButton.onClick.AddListener(OnNextTutor);
+            _exitButton.onClick.AddListener(OnExitGame);
             _nextButton.onClick.AddListener(OnButtonClick);
+            _exitButton.onClick.AddListener(OnButtonClick);
             _backButton.onClick.AddListener(OnBackTutor);
             _backButton.onClick.AddListener(OnButtonClick);
             _startGameButton.onClick.AddListener(OnStartGame);
@@ -35,6 +38,7 @@ namespace Game.UI.Tutor
         {
             _nextButton.onClick.RemoveAllListeners();
             _backButton.onClick.RemoveAllListeners();
+            _exitButton.onClick.RemoveAllListeners();
             _startGameButton.onClick.RemoveAllListeners();
         }
 
@@ -92,6 +96,11 @@ namespace Game.UI.Tutor
         private void OnStartGame()
         {
             SceneManager.LoadScene("LevelScene");
+        }
+        
+        private void OnExitGame()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
         private void OnButtonClick()
