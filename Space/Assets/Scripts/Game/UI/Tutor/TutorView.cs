@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using SpaceGame;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Game.UI.Tutor
+namespace SpaceGame
 {
     public sealed class TutorView : MonoBehaviour
     {

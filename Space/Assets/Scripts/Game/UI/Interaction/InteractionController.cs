@@ -45,11 +45,9 @@ namespace SpaceGame
 
             SetUIStateIdle();
         }
-
-        // ===== UI states =====
+      
         private void SetUIStateIdle()
         {
-            // Готовы начать: показать "Начать", скрыть "Закончить"
             if (_playButton)
             {
                 _playButton.gameObject.SetActive(true);
@@ -64,7 +62,6 @@ namespace SpaceGame
 
         private void SetUIStatePlaying()
         {
-            // Во время шоу: "Начать" скрыть/выключить, "Закончить" скрыть
             if (_playButton)
             {
                 _playButton.interactable = false;
@@ -79,15 +76,13 @@ namespace SpaceGame
 
         private void SetUIStateWaitingFinish()
         {
-            // После анимаций: показать "Закончить"
             if (_finishButton)
             {
                 _finishButton.gameObject.SetActive(true);
                 _finishButton.interactable = true;
             }
         }
-
-        // =============== КНОПКА 1 ===============
+    
         private void PlayPresentation()
         {
             _soundPlayer.PlaySfx(SoundType.ButtonClick);
@@ -173,8 +168,7 @@ namespace SpaceGame
                 })
                 .Play();
         }
-
-        // =============== КНОПКА 2 ===============
+ 
         private void FinishPresentation()
         {
             _soundPlayer.PlaySfx(SoundType.ButtonClick);

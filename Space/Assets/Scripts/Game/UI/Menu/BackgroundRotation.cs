@@ -20,7 +20,6 @@ namespace SpaceGame
 
             if (pingPong)
             {
-                // вращение туда-обратно
                 _rotationTween = transform
                     .DORotate(new Vector3(0f, 0f, angle), duration)
                     .SetEase(easeType)
@@ -28,7 +27,6 @@ namespace SpaceGame
             }
             else
             {
-                // постоянное вращение по кругу
                 _rotationTween = transform
                     .DORotate(new Vector3(0f, 0f, angle), duration, RotateMode.FastBeyond360)
                     .SetEase(easeType)

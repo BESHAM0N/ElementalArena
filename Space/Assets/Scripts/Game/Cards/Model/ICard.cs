@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SpaceGame;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace SpaceGame
