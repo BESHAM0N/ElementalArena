@@ -10,12 +10,12 @@ namespace SpaceGame
 
         public override void InstallBindings()
         {
-            Container
-                .Bind<ICursorService>()
-                .To<CursorService>()
-                .AsSingle()
-                .WithArguments(_cursorTexture, _hotspot)
-                .NonLazy();
+            // Container
+            //     .Bind<ICursorService>()
+            //     .To<CursorService>()
+            //     .AsSingle()
+            //     .WithArguments(_cursorTexture, _hotspot)
+            //     .NonLazy();
         }
     }
 }
