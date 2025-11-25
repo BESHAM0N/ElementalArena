@@ -16,6 +16,7 @@ namespace SpaceGame
         private Vector2 _touchOffset;
         private Vector2 _originalWorldPos;
         private CanvasGroup _canvasGroup;
+        private bool _isDragging = true;
 
         public event Action Dragged;
         public event Action Dropped;
@@ -31,6 +32,8 @@ namespace SpaceGame
 
         public void OnBeginDrag(PointerEventData eventData)
         { 
+            if(!_isDragging) return;
+            
             _sound.Play(SoundType.UpAndDownCard);
             if (transform.parent.TryGetComponent(out BoardSlotView slot))
                 slot.Controller.TryRemoveFromUI(slot.SlotIndex);
@@ -41,12 +44,14 @@ namespace SpaceGame
 
         public void OnDrag(PointerEventData eventData)
         {
+            if(!_isDragging) return;
             RefreshPosition(eventData);
             Dragged?.Invoke();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if(!_isDragging) return;
             if (_canvasGroup) _canvasGroup.blocksRaycasts = false;
 
             _touchOffset = (Vector2)transform.position - eventData.position;
@@ -56,6 +61,7 @@ namespace SpaceGame
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if(!_isDragging) return;
             RefreshPosition(eventData);
 
             if (transform.parent == _dragLayer)
@@ -83,6 +89,12 @@ namespace SpaceGame
 
             if (_canvasGroup)
                 _canvasGroup.blocksRaycasts = true;
+        }
+        
+        public void ChangeDragging(bool isDragging)
+        {
+            Debug.Log("ChangeDragging");
+            _isDragging = isDragging;
         }
     }
 }

@@ -10,18 +10,18 @@ namespace SpaceGame
     {
         [SerializeField] private BoardController _boardController;
 
-        [Header("UI")]
-        [SerializeField] private Button _playButton;    // Начать шоу
-        [SerializeField] private Button _finishButton;  // Закончить шоу
+        [Header("UI")] [SerializeField] private Button _playButton; // Начать шоу
+        [SerializeField] private Button _finishButton; // Закончить шоу
         [SerializeField] private LevelController _levelController;
 
-        [Header("Timings (seconds)")]
-        [SerializeField] private float _noneDuration       = 0.35f;
-        [SerializeField] private float _bonusDuration      = 1.00f;
-        [SerializeField] private float _destroyDuration    = 1.00f;
+        [Header("Timings (seconds)")] [SerializeField]
+        private float _noneDuration = 0.35f;
+
+        [SerializeField] private float _bonusDuration = 1.00f;
+        [SerializeField] private float _destroyDuration = 1.00f;
         [SerializeField] private float _absorptionDuration = 1.25f;
-        [SerializeField] private float _gapBetweenSteps    = 0.12f;
-        [SerializeField] private float _postAnimDelay      = 0.20f;
+        [SerializeField] private float _gapBetweenSteps = 0.12f;
+        [SerializeField] private float _postAnimDelay = 0.20f;
 
         private BoardReactionsManager _manager;
 
@@ -40,12 +40,17 @@ namespace SpaceGame
 
         private void Start()
         {
-            if (_playButton)   _playButton.onClick.AddListener(PlayPresentation);
-            if (_finishButton) _finishButton.onClick.AddListener(FinishPresentation);
+            if (_playButton)
+            {
+                _playButton.onClick.AddListener(PlayPresentation);
+                _playButton.onClick.AddListener(LockAllCards);
+            }
+            if (_finishButton) 
+                _finishButton.onClick.AddListener(FinishPresentation);
 
             SetUIStateIdle();
         }
-      
+
         private void SetUIStateIdle()
         {
             if (_playButton)
@@ -53,6 +58,7 @@ namespace SpaceGame
                 _playButton.gameObject.SetActive(true);
                 _playButton.interactable = true;
             }
+
             if (_finishButton)
             {
                 _finishButton.gameObject.SetActive(false);
@@ -67,6 +73,7 @@ namespace SpaceGame
                 _playButton.interactable = false;
                 _playButton.gameObject.SetActive(false);
             }
+
             if (_finishButton)
             {
                 _finishButton.interactable = false;
@@ -82,18 +89,18 @@ namespace SpaceGame
                 _finishButton.interactable = true;
             }
         }
-    
+
         private void PlayPresentation()
         {
             _soundPlayer.PlaySfx(SoundType.ButtonClick);
-            
+
             if (_seq != null && _seq.IsActive() && _seq.IsPlaying())
                 return;
 
             SetUIStatePlaying();
-            _visualTotal = 0;  
+            _visualTotal = 0;
             _gameEvents.RaiseScoreChanged(0);
-            
+
             var count = _boardController.Board.SlotsCount;
             var slots = new ICard[count];
             for (int i = 0; i < count; i++)
@@ -168,23 +175,23 @@ namespace SpaceGame
                 })
                 .Play();
         }
- 
+
         private void FinishPresentation()
         {
             _soundPlayer.PlaySfx(SoundType.ButtonClick);
-            
+
             if (_seq != null && _seq.IsActive())
             {
                 _seq.Kill(true);
                 _seq = null;
             }
-            
+
             _scoreEvents.RaiseLevelFinished(_visualTotal);
             _levelFlow.CompleteLevel(_visualTotal);
-            
+
             SetUIStateIdle();
         }
-     
+
         private CardView SafeGetView(int index, int count)
         {
             if (index < 0 || index >= count) return null;
@@ -193,9 +200,9 @@ namespace SpaceGame
 
         private float GetStepDuration(CardAnimType type) => type switch
         {
-            CardAnimType.NoneLift   => _noneDuration,
-            CardAnimType.Bonus      => _bonusDuration,
-            CardAnimType.Destroy    => _destroyDuration,
+            CardAnimType.NoneLift => _noneDuration,
+            CardAnimType.Bonus => _bonusDuration,
+            CardAnimType.Destroy => _destroyDuration,
             CardAnimType.Absorption => _absorptionDuration,
             _ => 0.8f
         };
@@ -206,7 +213,7 @@ namespace SpaceGame
             var board = _boardController.Board;
             var count = board.SlotsCount;
             int bonusTotal = 0;
-            
+
             for (int i = 0; i < count; i++)
             {
                 var card = board.GetCard(i);
@@ -223,6 +230,31 @@ namespace SpaceGame
                 _visualTotal += bonusTotal;
                 _gameEvents.RaiseScoreChanged(_visualTotal);
                 Debug.Log($"Bonus +{bonusTotal} points for matching element {levelSuit}");
+            }
+        }
+
+        private void LockAllCards()
+        {
+            Debug.Log("LockAllCards");
+            var board = _boardController.Board;
+            var count = board.SlotsCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                var cardModel = board.GetCard(i);
+                if (cardModel == null)
+                    continue;
+
+                var view = _boardController.GetView(i);
+                if (view == null)
+                    continue;
+
+                var go = view.gameObject.GetComponent<CardDragHandler>();
+
+                if (go != null)
+                {
+                    go.ChangeDragging(false);
+                }
             }
         }
     }
