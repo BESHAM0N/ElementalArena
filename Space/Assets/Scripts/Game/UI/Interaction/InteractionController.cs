@@ -19,7 +19,6 @@ namespace SpaceGame
         [Inject] private IScoreEvents _scoreEvents;
         [Inject] private IPresentationService _presentationService;
         [Inject] private IBoardAnimator _boardAnimator;
-        //[Inject] private SoundPlayer _soundPlayer;
         [Inject] private ISoundService _soundService;
         
         private int _visualTotal;
@@ -52,7 +51,6 @@ namespace SpaceGame
         
         private void OnPlayClicked()
         {
-           // _soundPlayer.PlaySfx(SoundType.ButtonClick);
             _soundService.Play(SoundType.ButtonClick);
 
             if (_boardAnimator.IsPlaying)
@@ -79,7 +77,6 @@ namespace SpaceGame
 
         private void OnFinishClicked()
         {
-            //_soundPlayer.PlaySfx(SoundType.ButtonClick);
             _soundService.Play(SoundType.ButtonClick);
 
             _boardAnimator.Stop();
@@ -135,7 +132,6 @@ namespace SpaceGame
         
         private void LockAllCards()
         {
-            Debug.Log("LockAllCards");
             var board = _boardController.Board;
             var count = board.SlotsCount;
 

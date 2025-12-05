@@ -7,7 +7,7 @@ namespace SpaceGame
     {
         private readonly ListCardPrototypes _source;
         private List<CardPrototype> _remaining;
-        private readonly Random _random = new Random();
+        private readonly Random _random = new ();
 
         public DeckService(ListCardPrototypes source)
         {

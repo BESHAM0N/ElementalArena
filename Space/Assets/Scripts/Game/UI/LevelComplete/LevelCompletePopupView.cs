@@ -9,6 +9,7 @@ namespace SpaceGame
     public class LevelCompletePopupView : MonoBehaviour, ILevelEndUI
     {
         [Inject] private readonly ISoundService _sound;
+        
         [SerializeField] private GameObject _root;
         [SerializeField] private TMP_Text _levelScoreText;
         [SerializeField] private TMP_Text _totalScoreText;

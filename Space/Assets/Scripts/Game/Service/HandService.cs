@@ -15,7 +15,9 @@ namespace SpaceGame
         public void BuildHand(IReadOnlyList<Card> cards)
         {
             ClearHand();
-            if (cards == null) return;
+            if (cards == null) 
+                return;
+            
             for (int i = 0; i < cards.Count; i++)
                 _views.Add(_factory.CreateView(cards[i]));
         }

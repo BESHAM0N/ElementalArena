@@ -10,7 +10,7 @@ namespace SpaceGame
         [SerializeField] private float duration = 60f;         // время одного полного оборота
         [SerializeField] private Ease easeType = Ease.Linear;  // тип плавности вращения
         [SerializeField] private bool clockwise = true;        // направление вращения
-        [SerializeField] private bool pingPong = false;        // туда-сюда или по кругу
+        [SerializeField] private bool pingPong;        // туда-сюда или по кругу
 
         private Tween _rotationTween;
 

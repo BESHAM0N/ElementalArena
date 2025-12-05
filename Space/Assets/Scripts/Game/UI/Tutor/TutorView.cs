@@ -12,13 +12,12 @@ namespace SpaceGame
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _exitButton;
-        
+
         [SerializeField] private List<GameObject> _tutors;
         [SerializeField] private GameObject _tutorEndPanel;
-        
-       // [Inject] private SoundPlayer _soundPlayer;
+
         [Inject] private ISoundService _soundService;
-        
+
         private int _currentIndex;
 
         private void OnEnable()
@@ -44,17 +43,16 @@ namespace SpaceGame
 
         private void Awake()
         {
-            //_soundPlayer.PlayMusic(SoundType.LevelThreeBackgroundMusic);
             _soundService.PlayLoop(SoundType.LevelThreeBackgroundMusic);
         }
-        
+
         private void ShowTutor(int index)
         {
             foreach (var t in _tutors)
                 t.SetActive(false);
 
             _tutorEndPanel.SetActive(false);
-           
+
             if (index >= 0 && index < _tutors.Count)
             {
                 _tutors[index].SetActive(true);
@@ -77,7 +75,7 @@ namespace SpaceGame
                 _currentIndex++;
                 ShowTutor(_currentIndex);
             }
-            else if(_currentIndex == _tutors.Count)
+            else if (_currentIndex == _tutors.Count)
             {
                 _tutorEndPanel.SetActive(true);
                 _nextButton.gameObject.SetActive(false);
@@ -98,7 +96,7 @@ namespace SpaceGame
         {
             SceneManager.LoadScene("LevelScene");
         }
-        
+
         private void OnExitGame()
         {
             SceneManager.LoadScene("MainMenu");
@@ -106,7 +104,6 @@ namespace SpaceGame
 
         private void OnButtonClick()
         {
-            //_soundPlayer.PlaySfx(SoundType.ButtonClick);
             _soundService.Play(SoundType.ButtonClick);
         }
     }

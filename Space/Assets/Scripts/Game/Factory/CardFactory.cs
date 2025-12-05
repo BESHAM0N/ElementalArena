@@ -19,7 +19,9 @@ namespace SpaceGame
 
             foreach (var proto in source.Cards)
             {
-                if (proto == null) continue;
+                if (proto == null) 
+                    continue;
+                
                 var m = new Card();
                 m.InitializeFromPrototype(proto);
                 result.Add(m);
@@ -38,9 +40,13 @@ namespace SpaceGame
         public List<CardView> CreateViews(IReadOnlyList<Card> models)
         {
             var list = new List<CardView>(models?.Count ?? 0);
-            if (models == null) return list;
+            
+            if (models == null) 
+                return list;
+            
             for (int i = 0; i < models.Count; i++)
                 list.Add(CreateView(models[i]));
+            
             return list;
         }
     }

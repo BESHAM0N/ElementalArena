@@ -117,7 +117,7 @@ namespace SpaceGame
             }
             else
             {
-                Debug.Log($"GAME COMPLETE. Total score: {total}");
+                Debug.Log($"Игра завершена. Всего баллов: {total}");
                 _sceneLoader.LoadMainMenu();
             }
         }

@@ -15,7 +15,7 @@ namespace SpaceGame
         private readonly SoundPlayer _player;
         private readonly HashSet<SoundType> _bgmTypes;
         
-        /// <summary> Последний запрошенный трек, чтобы можно было возобновить после включения звука</summary>
+        /// <summary> Последний запрошенный трек, чтобы можно было возобновить после включения звука</summary> 
         private SoundType? _lastMusic;
 
         [Inject]
