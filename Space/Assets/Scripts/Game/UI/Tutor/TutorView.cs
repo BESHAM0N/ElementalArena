@@ -16,7 +16,8 @@ namespace SpaceGame
         [SerializeField] private List<GameObject> _tutors;
         [SerializeField] private GameObject _tutorEndPanel;
         
-        [Inject] private SoundPlayer _soundPlayer;
+       // [Inject] private SoundPlayer _soundPlayer;
+        [Inject] private ISoundService _soundService;
         
         private int _currentIndex;
 
@@ -43,7 +44,8 @@ namespace SpaceGame
 
         private void Awake()
         {
-            _soundPlayer.PlayMusic(SoundType.LevelThreeBackgroundMusic);
+            //_soundPlayer.PlayMusic(SoundType.LevelThreeBackgroundMusic);
+            _soundService.PlayLoop(SoundType.LevelThreeBackgroundMusic);
         }
         
         private void ShowTutor(int index)
@@ -104,7 +106,8 @@ namespace SpaceGame
 
         private void OnButtonClick()
         {
-            _soundPlayer.PlaySfx(SoundType.ButtonClick);
+            //_soundPlayer.PlaySfx(SoundType.ButtonClick);
+            _soundService.Play(SoundType.ButtonClick);
         }
     }
 }

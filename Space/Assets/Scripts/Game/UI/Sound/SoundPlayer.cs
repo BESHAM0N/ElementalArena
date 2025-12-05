@@ -3,6 +3,10 @@ using UnityEngine;
 
 namespace SpaceGame
 {
+    /// <summary>
+    /// Низкоуровневый «проигрыватель» клипов.
+    /// Не знает о PlayerPrefs, типах сцен, настройках игрока и т.д.
+    /// </summary>
     public sealed class SoundPlayer : MonoBehaviour
     {
         [Header("Config & Sources")]
@@ -17,11 +21,16 @@ namespace SpaceGame
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
+            
             _map.Clear();
             if (_config?.Config != null)
+            {
                 foreach (var s in _config.Config)
+                {
                     if (s.AudioClip && !_map.ContainsKey(s.SoundType))
                         _map.Add(s.SoundType, s.AudioClip);
+                }
+            }
         }
 
         public void SetMasterMute(bool mute)
@@ -32,18 +41,20 @@ namespace SpaceGame
 
         public void PlaySfx(SoundType type, float volume = 0.3f, float pitch = 1f)
         {
+            if (_sfx == null) return;
             if (!_map.TryGetValue(type, out var clip) || clip == null) return;
+            
             _sfx.pitch = pitch;
             _sfx.PlayOneShot(clip, Mathf.Clamp01(volume));
         }
 
         public void PlayMusic(SoundType type, float volume = 0.2f)
         {
-            if (!_map.TryGetValue(type, out var clip) || clip == null) return;
             if (_music == null) return;
+            if (!_map.TryGetValue(type, out var clip) || clip == null) return;
 
             if (_music.clip == clip && _music.isPlaying)
-                return;
+                return; // уже играет этот трек
 
             _music.clip = clip;
             _music.volume = Mathf.Clamp01(volume);

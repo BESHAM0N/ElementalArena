@@ -8,12 +8,14 @@ namespace SpaceGame
     public sealed class SoundService : ISoundService
     {
         private const string PREF_KEY = "sound_enabled";
+        private const float EFFECTS_VOLUME = 0.3f;
+        
         public bool IsSoundEnabled { get; private set; } = true;
 
         private readonly SoundPlayer _player;
         private readonly HashSet<SoundType> _bgmTypes;
         
-        private const float EFFECTS_VOLUME = 0.3f;
+        /// <summary> Последний запрошенный трек, чтобы можно было возобновить после включения звука</summary>
         private SoundType? _lastMusic;
 
         [Inject]
@@ -42,16 +44,17 @@ namespace SpaceGame
 
         public void SetEnabled(bool enabled)
         {
-            if (IsSoundEnabled == enabled) return;
+            if (IsSoundEnabled == enabled) 
+                return;
+            
             IsSoundEnabled = enabled;
             PlayerPrefs.SetInt(PREF_KEY, enabled ? 1 : 0);
             PlayerPrefs.Save();
             Apply(enabled);
-
+            
+            // Если включили звук и до этого уже была музыка — вернуть ее
             if (enabled && _lastMusic.HasValue)
-            {
                 _player.PlayMusic(_lastMusic.Value);
-            }
         }
 
         private void Apply(bool enabled)
@@ -61,33 +64,36 @@ namespace SpaceGame
 
         public void Play(SoundType type, float volume = 0.2f, float pitch = 1f)
         {
-            // if (!IsSoundEnabled) return;
-            // if (_bgmTypes.Contains(type))
-            // {
-            //     _player.PlayMusic(type);
-            // }
-            // else
-            // {
-            //     _player.PlaySfx(type, EFFECTS_VOLUME, pitch);
-            // }
-            
+            // Музыка
             if (_bgmTypes.Contains(type))
             {
                 _lastMusic = type;
-                if (!IsSoundEnabled) return;     // не играем, но запомнили что хотели
-                _player.PlayMusic(type);
+
+                if (!IsSoundEnabled)
+                    return; // запомнили, но не играем
+
+                _player.PlayMusic(type, volume);
             }
-            else
+            else // SFX
             {
-                if (!IsSoundEnabled) return;     // SFX глушим полностью, без очереди
-                _player.PlaySfx(type, EFFECTS_VOLUME, pitch);
+                if (!IsSoundEnabled)
+                    return;
+
+                // общий коэфф. для эффектов, чтобы не оглушали: EFFECTS_VOLUME
+                _player.PlaySfx(type, EFFECTS_VOLUME * volume, pitch);
             }
         }
 
+        /// <summary>
+        /// Явно просим зациклить музыку
+        /// </summary>
         public void PlayLoop(SoundType type)
         {
             _lastMusic = type;
-            if (!IsSoundEnabled) return;         // не играем сейчас, но запомнили
+            
+            if (!IsSoundEnabled) 
+                return;
+            
             _player.PlayMusic(type);
         }
 
