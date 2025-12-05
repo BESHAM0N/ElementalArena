@@ -10,11 +10,10 @@ namespace SpaceGame
         [SerializeField] private List<BoardSlotView> _slotViews;
         [SerializeField] private RectTransform _boardArea;
         [SerializeField] private LevelCompletePopupView _level;
-        private IBoard _board { get; set; }
+        private IBoard _board = new Board();
 
         private void Awake()
         {
-            _board = new Board();
             _board.OnSlotChanged += OnBoardSlotChanged;
             _level.NextClicked += ClearAllSlots;
 

@@ -387,6 +387,7 @@ MonoBehaviour:
   _levelController: {fileID: 537913595}
   _levelCompletePopupView: {fileID: 1183414041}
   _gameCompletePopupView: {fileID: 1676133679}
+  _boardController: {fileID: 1933080238}
 --- !u!114 &172877855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6559,16 +6560,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4cfc6757b34e81ad306c96bd81ab66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boardController: {fileID: 1933080238}
   _playButton: {fileID: 616341725}
   _finishButton: {fileID: 1225300013}
   _levelController: {fileID: 537913595}
-  _noneDuration: 0.35
-  _bonusDuration: 1
-  _destroyDuration: 1
-  _absorptionDuration: 1.25
-  _gapBetweenSteps: 0.12
-  _postAnimDelay: 0.2
+  _boardController: {fileID: 1933080238}
 --- !u!1 &1942419755
 GameObject:
   m_ObjectHideFlags: 0
