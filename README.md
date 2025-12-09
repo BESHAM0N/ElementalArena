@@ -1,5 +1,5 @@
-🎪 Elemental Arena
-
+<b>🎪 Elemental Arena</b>
+---
 A strategic card-puzzle about building the world’s most spectacular elemental circus show.
 
 Elemental Arena is a strategy puzzle game where you become the mastermind behind a magical circus.
@@ -7,7 +7,8 @@ Your task is to arrange elemental cards in the correct order to trigger powerful
 
 This project was originally created for ScoreSpace Jam #36.
 
-🌟 Gameplay Overview
+<b>🌟 Gameplay Overview</b>
+---
 At the heart of the game is a reaction board — a grid that defines the interaction outcome between every pair of elements:
 The vertical axis represents the element of the first card in the chain.
 The horizontal axis represents the element of the next card.
@@ -16,8 +17,8 @@ Their intersection determines the reaction result:
 Bonus, Destroy, Absorb or None.
 Your goal is to place cards from left to right, forming the strongest possible reaction chain before each show ends.
 
-✔ Key Rules
-
+<b>✔ Key Rules</b>
+---
 The entire chain is evaluated strictly left → right.
 
 Each new card compares its element to the previous card’s element using the reaction table.
@@ -26,14 +27,16 @@ The better your reactions, the higher your score.
 
 The show has a limited number of rounds — reach the highest score before it ends!
 
-🃏 Example
+<b>🃏 Example</b>
+---
 If your first card is Animal, and the next one is Electricity, then:
 Find Animal on the vertical axis
 Find Electricity on the horizontal axis
 The reaction at their intersection is Destroy
 Many players mentioned that it takes a couple of plays to fully understand the system, but once it clicks — the strategic depth becomes extremely satisfying.
 
-🎭 Strategy Depth
+<b>🎭 Strategy Depth</b>
+---
 Players describe Elemental Arena as:
 
 “Really unique — confusing at first, but extremely fun once it clicks.”
@@ -50,7 +53,8 @@ Adapt to RNG and incomplete information
 The game does not go on forever — the circus season has a fixed number of shows.
 This wasn't obvious to many new players, so it’s worth noting here.
 
-🏆 Leaderboard
+<b>🏆 Leaderboard</b>
+---
 The game features a global online leaderboard powered by:
 ➡️ https://danqzq.itch.io/leaderboard-creator
 
