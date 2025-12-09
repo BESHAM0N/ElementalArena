@@ -5,7 +5,7 @@ A strategic card-puzzle about building the world’s most spectacular elemental 
 Elemental Arena is a strategy puzzle game where you become the mastermind behind a magical circus.
 Your task is to arrange elemental cards in the correct order to trigger powerful chain reactions and amaze the audience — while climbing the global leaderboard.
 
-This project was originally created for ScoreSpace Jam #36.
+This project was originally created for ScoreSpace Jam #36 and placed <b>15th</b> out of 74 projects..
 
 <b>🌟 Gameplay Overview</b>
 ---
