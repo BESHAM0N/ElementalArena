@@ -7,6 +7,10 @@ Your task is to arrange elemental cards in the correct order to trigger powerful
 
 This project was originally created for ScoreSpace Jam #36 and placed <b>15th</b> out of 74 projects.
 
+<div align="center">
+  <img src="Space/Assets/Sprites/Tutor/Gif/1.gif" width="800"/>
+</div>
+
 <b>🌟 Gameplay Overview</b>
 ---
 At the heart of the game is a reaction board — a grid that defines the interaction outcome between every pair of elements:
