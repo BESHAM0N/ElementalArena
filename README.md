@@ -17,6 +17,8 @@ At the heart of the game is a reaction board — a grid that defines the interac
 The vertical axis represents the element of the first card in the chain.
 The horizontal axis represents the element of the next card.
 
+<div align="center"> <img width="800" alt="Снимок экрана 2025-12-09 200558" src="https://github.com/user-attachments/assets/7cfa91a1-bcf1-4b1b-bf49-b09559a4f38e" /></div>
+
 Their intersection determines the reaction result:
 Bonus, Destroy, Absorb or None.
 Your goal is to place cards from left to right, forming the strongest possible reaction chain before each show ends.
@@ -61,6 +63,8 @@ This wasn't obvious to many new players, so it’s worth noting here.
 ---
 The game features a global online leaderboard powered by:
 ➡️ https://danqzq.itch.io/leaderboard-creator
+
+<div align="center"> <img width="800" alt="Снимок экрана 2025-12-09 200848" src="https://github.com/user-attachments/assets/704e7a3a-92ba-4617-baa1-c7b127bae867"  /></div>
 
 Your goal is to reach the TOP and outperform performers from around the world.
 
