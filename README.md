@@ -60,5 +60,6 @@ The game features a global online leaderboard powered by:
 
 Your goal is to reach the TOP and outperform performers from around the world.
 
-🚀 You can play the latest version here:
+<b>🚀 You can play the latest version here:</b>
+---
 👉 https://besham0n.itch.io/elemental-arena
