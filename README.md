@@ -20,7 +20,7 @@ The horizontal axis represents the element of the next card.
 <div align="center"> <img width="800" alt="Снимок экрана 2025-12-09 200558" src="https://github.com/user-attachments/assets/7cfa91a1-bcf1-4b1b-bf49-b09559a4f38e" /></div>
 
 Their intersection determines the reaction result:
-Bonus, Destroy, Absorb or None.
+B-Bonus, D-Destroy, A-Absorb or N-None.
 Your goal is to place cards from left to right, forming the strongest possible reaction chain before each show ends.
 
 <b>✔ Key Rules</b>
